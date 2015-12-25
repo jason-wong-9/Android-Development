@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/editOperand1"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp" />
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/editOperand2"
         android:layout_gravity="center_horizontal" />
 
     <LinearLayout
@@ -44,38 +44,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#ffffff">
+        android:gravity="center">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"
-            android:id="@+id/button" />
+            android:id="@+id/btnAddition"
+            style="?android:attr/buttonStyleSmall"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
-            android:id="@+id/button2" />
+            android:id="@+id/btnSubtraction"
+            style="?android:attr/buttonStyleSmall" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="/"
-            android:id="@+id/button3" />
+            android:id="@+id/btnDivision"
+            style="?android:attr/buttonStyleSmall" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="*"
-            android:id="@+id/button4" />
+            android:id="@+id/btnMultiplication"
+            style="?android:attr/buttonStyleSmall" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="The Result"
+        android:text="@string/resultText"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp" />
@@ -85,7 +89,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0.0"
-        android:id="@+id/textView3"
+        android:id="@+id/txtResult"
         android:gravity="center" />
 
 </LinearLayout>
