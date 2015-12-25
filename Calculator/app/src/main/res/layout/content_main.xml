@@ -73,6 +73,13 @@
             android:text="*"
             android:id="@+id/btnMultiplication"
             style="?android:attr/buttonStyleSmall" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLR"
+            android:id="@+id/btnClear" />
     </LinearLayout>
 
     <TextView
