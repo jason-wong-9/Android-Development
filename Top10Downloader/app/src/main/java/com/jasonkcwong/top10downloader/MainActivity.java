@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,22 +16,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TextView xmlTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        xmlTextView = (TextView) findViewById(R.id.xmlTextView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        DownloadData downloadData = new DownloadData();
+        downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml");
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -63,8 +59,15 @@ public class MainActivity extends AppCompatActivity {
             mFileContents = downloadXMLFile(params[0]);
             if(mFileContents == null){
                 Log.d("DownloadData", "Error downloading");
-                return mFileContents;
             }
+            return mFileContents;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Log.d("DownloadData", "Result was " + result);
+            xmlTextView.setText(result);
         }
 
         private String downloadXMLFile(String urlPath) {
@@ -89,7 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 return tempBuffer.toString();
             } catch(IOException e) {
                 Log.d("DownlaodData", "IO Exception reading data: " + e.getMessage());
+            } catch (SecurityException e) {
+                Log.d("DownloadData", "Security exception. Needs permission?" + e.getMessage());
             }
+
+            return null;
         }
+
     }
 }
