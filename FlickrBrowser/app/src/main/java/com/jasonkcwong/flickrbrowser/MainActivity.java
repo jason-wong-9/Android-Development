@@ -2,20 +2,30 @@ package com.jasonkcwong.flickrbrowser;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = "MainActivity";
+    private List<Photo> mPhotosList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        GetFlickrJsonData jsonData = new GetFlickrJsonData("android,lollipop", true);
-        jsonData.execute();
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ProcessPhotos processPhotos = new ProcessPhotos("google", true);
+        processPhotos.execute();
     }
 
     @Override
@@ -38,5 +48,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class ProcessPhotos extends GetFlickrJsonData {
+        public ProcessPhotos(String searchCriteria, boolean matchAll) {
+            super(searchCriteria, matchAll);
+        }
+
+        public void execute() {
+            super.execute();
+            ProcessData processData = new ProcessData();
+            processData.execute();
+        }
+        public class ProcessData extends DownloadJsonData {
+            protected void onPostExecute(String webData) {
+                super.onPostExecute(webData);
+                flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this, getmPhotos());
+                mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+            }
+        }
     }
 }
